@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Divya Challenge</title>
+<style>
+:root{color-scheme:dark;--bg:#090a13;--panel:#141525;--muted:#aaaac2;--line:#36334d;--accent:#bba0ff;--pink:#f8a5cb;--white:#f6f2ff}*{box-sizing:border-box}body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 80% 0%,#33204c 0%,transparent 45%),radial-gradient(ellipse at 0% 100%,#242149 0%,transparent 40%),var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--white)}main{max-width:620px;margin:0 auto;min-height:100svh;padding:26px 18px 48px;display:flex;flex-direction:column;justify-content:center}.shell{background:rgba(20,21,37,.92);border:1px solid var(--line);border-radius:25px;padding:clamp(20px,6vw,36px);box-shadow:0 20px 70px #0007}.eyebrow{font-size:.77rem;letter-spacing:.16em;color:var(--accent);font-weight:800;text-transform:uppercase}.title{font-size:clamp(2.2rem,10vw,4.2rem);line-height:1.02;letter-spacing:-.055em;margin:18px 0}.subtitle{color:var(--muted);font-size:1.04rem;line-height:1.65}.hero-emoji{font-size:3rem}.primary{border:0;background:linear-gradient(110deg,#b7a0ff,#f6a2d7);color:#151020;font-weight:800;font-size:1rem;padding:16px 24px;border-radius:14px;width:100%;cursor:pointer;margin-top:22px}.primary:disabled{opacity:.4;cursor:not-allowed}.secondary{border:1px solid var(--line);color:var(--white);background:#201d33;font-weight:700;padding:14px 20px;border-radius:14px;cursor:pointer}.topline{display:flex;justify-content:space-between;gap:12px;align-items:center;color:var(--muted);font-size:.82rem;margin-bottom:12px}.bar{height:7px;background:#36324d;border-radius:9px;overflow:hidden;margin-bottom:28px}.bar div{height:100%;background:linear-gradient(90deg,#ad98ff,#f1a4c9);border-radius:9px;transition:width .25s}.question{font-size:clamp(1.45rem,5.8vw,2.1rem);letter-spacing:-.03em;line-height:1.2;margin:10px 0 24px}.options{display:grid;gap:11px}.choice{padding:16px;border-radius:14px;border:1px solid #46415d;background:#232036;color:var(--white);font:inherit;text-align:left;cursor:pointer;display:flex;gap:14px;align-items:center;transition:background .12s,border-color .12s}.choice:hover{border-color:#c2a5fa}.choice.selected{background:#45365e;border-color:#d3b1ff}.letter{font-size:.8rem;color:#c0b5d8;font-weight:800;width:18px;flex:none}.feedback{background:#28243b;color:#dfd4f7;border-radius:12px;margin-top:18px;padding:13px 15px;line-height:1.5}.feedback.good{background:#1d3b34;color:#c4fbe6}.feedback.bad{background:#442c40;color:#ffd7e4}textarea{width:100%;min-height:160px;resize:vertical;border:1px solid #514669;background:#232036;color:var(--white);padding:16px;border-radius:14px;font:inherit;line-height:1.5}textarea:focus,.choice:focus-visible,.primary:focus-visible,.secondary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.tiny{color:var(--muted);font-size:.83rem;line-height:1.55}.score{font-size:3.5rem;font-weight:900;letter-spacing:-.05em;margin:5px 0}.results{white-space:pre-wrap;overflow-wrap:anywhere;background:#242039;border:1px solid var(--line);padding:17px;border-radius:14px;max-height:310px;overflow:auto;line-height:1.6;font-size:.87rem}.btnrow{display:flex;gap:10px}.btnrow>*{flex:1}.center{text-align:center}.foot{font-size:.76rem;color:#88849e;text-align:center;margin-top:18px}.sound-toggle{position:fixed;top:12px;right:12px;z-index:10;border:1px solid var(--line);background:#242039;color:var(--white);border-radius:12px;padding:10px 12px;font:inherit;font-size:.78rem;font-weight:750;cursor:pointer}.sound-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.confetti-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}.hidden{display:none!important}@media (prefers-reduced-motion:no-preference){.shell{animation:appear .25s ease-out}@keyframes appear{from{opacity:.1;transform:translateY(10px)}to{opacity:1;transform:none}}}
+</style>
+</head>
+<body><canvas id="confetti" class="confetti-canvas" aria-hidden="true"></canvas><button id="soundToggle" class="sound-toggle" type="button" aria-pressed="true" onclick="toggleSound()">🔊 Sound on</button><main><section id="app" class="shell" aria-live="polite"></section><div class="foot">Made for Divya · No account needed</div></main>
+<script>
+/* Questions are fully editable here. The anniversary date is the date supplied by Ali and has not been independently verified. */
+const questions=[
+{level:'01 · HOW WELL DO YOU KNOW ALI?',q:"What's Ali's favorite game?",options:['Fortnite','Rainbow Six Siege','NBA 2K','Call of Duty'],correct:[2],good:'Correct. The 2K obsession is very real. 💀',bad:'Nahhhh, ask him how many hours he has on 2K. 😭'},
+{level:'01 · HOW WELL DO YOU KNOW ALI?',q:"When is Ali's birthday?",options:['April 14','April 24','April 28','May 24'],correct:[1],good:'Okay, you remember the important dates.',bad:'Bro might have to send a calendar invite. 💀'},
+{level:'01 · HOW WELL DO YOU KNOW ALI?',q:'What football club does Ali support?',options:['Real Madrid','Manchester City','FC Barcelona','Liverpool'],correct:[2],good:'Visca Barça. 🔵🔴',bad:'REAL MADRID would be a crazy answer. 💀'},
+{level:'02 · THE OG DAYS',q:'What was the OG game Divya used to get mad at Ali for playing?',options:['NBA 2K','FIFA','Rainbow Six Siege','Fortnite'],correct:[1],good:'The FIFA era was something else. 😭',bad:'The FIFA era has apparently been forgotten.'},
+{level:'02 · THE OG DAYS',q:'What happened on the first night Ali and Divya met?',options:['Divya was drunk','Ali was drunk','They were both sober','They were both drunk'],correct:[0],good:'You actually remember the first night.',bad:'Nahhh, rewind the memories. 💀'},
+{level:'02 · THE OG DAYS',q:'What was the first game Ali and Divya used to play together?',options:['Roblox','Fortnite','Minecraft','FIFA'],correct:[0],good:'OG Roblox days never die. ❤️',bad:'HOW did you forget the Roblox era? 😭'},
+{level:'03 · OUR HISTORY',q:'When is our anniversary?',options:['April 21, 2024','April 24, 2024','April 26, 2024','April 29, 2024'],correct:[2],good:'The date is locked in. ❤️',bad:'We need a shared calendar ASAP. 💀'},
+{level:'03 · OUR HISTORY',q:'Who are the two people Ali trusts the most?',options:['Divya','Joud','Nasser','Yannis'],correct:[0,1],good:'You got both. Respect. ❤️',bad:'Two names. TWO. 😭'},
+{level:'03 · OUR HISTORY',q:"What did Ali make Divya for Valentine's Day?",options:['A playlist','A website','A video','A handwritten letter'],correct:[1],good:'And now he made another one. Full circle.',bad:'The first website is not getting enough respect. 💀'},
+{level:'04 · WOULD YOU RATHER?',q:'Would you rather...',options:['Listen to Ali explain NBA 2K builds for an hour','Play NBA 2K with Ali and try to beat him'],kind:'opinion'},
+{level:'04 · WOULD YOU RATHER?',q:'Would you rather...',options:['Go on a food date with Ali','Have a movie night with Ali'],kind:'opinion'},
+{level:'04 · WOULD YOU RATHER?',q:'Would you rather...',options:['Let Ali choose your next Netflix show','Let Ali choose your next TikTok repost'],kind:'opinion'},
+{level:'05 · THE FINAL CHALLENGE',q:'Which one does Ali love most?',options:['NBA 2K','His PlayStation','Divya','Sleeping'],correct:[2],good:'This one was pretty obvious. ❤️',bad:'Okay, that hurts. 😭'},
+{level:'05 · THE FINAL CHALLENGE',q:'What are your favorite things about Ali?',kind:'text'},
+{level:'05 · THE FINAL CHALLENGE',q:'Which guy is the one for you?',options:['Ali','Someone else'],correct:[0],good:'Correct answer. Obviously. 😭❤️',bad:'WRONG ANSWER. TRY AGAIN. 💀',final:true,forceRetry:true}
+];
+let index=-1,answers=[],chosen=[],textAnswer='',revealed=false;
+const app=document.getElementById('app');
+const FORM_ENDPOINT='https://formspree.io/f/mjywlevy';
+let submissionInProgress=false,submissionDone=false;
+// Tiny synthesized sound effects: no external audio files, downloads, or internet needed.
+let soundEnabled=true,audioCtx=null;
+function toggleSound(){soundEnabled=!soundEnabled;const button=document.getElementById('soundToggle');button.textContent=soundEnabled?'🔊 Sound on':'🔇 Sound off';button.setAttribute('aria-pressed',String(soundEnabled));if(soundEnabled)playSound('tap')}
+function playSound(type){
+ if(!soundEnabled)return;
+ try{
+  const AudioContextClass=window.AudioContext||window.webkitAudioContext;
+  if(!AudioContextClass)return;
+  if(!audioCtx)audioCtx=new AudioContextClass();
+  if(audioCtx.state==='suspended')audioCtx.resume().catch(()=>{});
+  const now=audioCtx.currentTime;
+  const notes=type==='correct'?[[523.25,0,.12],[659.25,.11,.12],[783.99,.22,.21]]:type==='wrong'?[[260,.0,.14],[196,.13,.23]]:type==='finish'?[[523.25,0,.13],[659.25,.11,.13],[783.99,.22,.13],[1046.5,.34,.36]]:[[480,0,.055]];
+  for(const [pitch,delay,duration] of notes){
+   const oscillator=audioCtx.createOscillator(),gain=audioCtx.createGain();
+   oscillator.type=type==='wrong'?'triangle':'sine';oscillator.frequency.setValueAtTime(pitch,now+delay);
+   gain.gain.setValueAtTime(.0001,now+delay);
+   gain.gain.exponentialRampToValueAtTime(type==='tap'?.035:.09,now+delay+.018);
+   gain.gain.exponentialRampToValueAtTime(.0001,now+delay+duration);
+   oscillator.connect(gain).connect(audioCtx.destination);
+   oscillator.start(now+delay);oscillator.stop(now+delay+duration+.012);
+  }
+ }catch(e){/* If audio is unavailable, the quiz still works normally. */}
+}
+
+// Lightweight red confetti, drawn locally (no libraries, internet, or image files).
+const confettiCanvas=document.getElementById('confetti');
+const confettiContext=confettiCanvas.getContext('2d');
+let confettiBits=[],confettiFrame=0,confettiStart=0;
+function resizeConfetti(){const dpr=Math.min(window.devicePixelRatio||1,2);confettiCanvas.width=Math.round(window.innerWidth*dpr);confettiCanvas.height=Math.round(window.innerHeight*dpr);confettiContext.setTransform(dpr,0,0,dpr,0,0)}
+window.addEventListener('resize',resizeConfetti);resizeConfetti();
+function redConfetti(){
+ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches||!confettiContext)return;
+ cancelAnimationFrame(confettiFrame);resizeConfetti();
+ const w=window.innerWidth,h=window.innerHeight;
+ const reds=['#ff294c','#ff4d61','#e50936','#ba092b','#ff6b73','#d71732'];
+ confettiBits=Array.from({length:105},()=>({x:w*(.15+Math.random()*.7),y:h*.25+Math.random()*h*.12,vx:(Math.random()-.5)*9,vy:-3-Math.random()*8,g:.14+Math.random()*.13,size:4+Math.random()*7,rotation:Math.random()*Math.PI,spin:(Math.random()-.5)*.18,color:reds[Math.floor(Math.random()*reds.length)]}));
+ confettiStart=performance.now();
+ function animate(t){
+  confettiContext.clearRect(0,0,w,h);
+  for(const b of confettiBits){b.vy+=b.g;b.x+=b.vx;b.y+=b.vy;b.rotation+=b.spin;
+   confettiContext.save();confettiContext.translate(b.x,b.y);confettiContext.rotate(b.rotation);confettiContext.fillStyle=b.color;confettiContext.fillRect(-b.size/2,-b.size/3,b.size,b.size*.65);confettiContext.restore();}
+  if(t-confettiStart<2400){confettiFrame=requestAnimationFrame(animate)}else{confettiContext.clearRect(0,0,w,h)}
+ }
+ confettiFrame=requestAnimationFrame(animate);
+}
+function retryFinal(){chosen=[];revealed=false;render()}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function start(){playSound('tap');cancelAnimationFrame(confettiFrame);confettiContext.clearRect(0,0,window.innerWidth,window.innerHeight);index=0;answers=[];chosen=[];textAnswer='';revealed=false;submissionInProgress=false;submissionDone=false;render()}
+function choose(i){const q=questions[index];if(revealed)return;if(q.correct?.length===2){chosen=chosen.includes(i)?chosen.filter(n=>n!==i):chosen.length<2?[...chosen,i]:chosen}else chosen=[i];render()}
+function isCorrect(q,ans){return q.correct&&ans.length===q.correct.length&&q.correct.every(i=>ans.includes(i))}
+function next(){const q=questions[index];if(index===questions.length-1)playSound('finish');if(q.kind==='text'){textAnswer=document.querySelector('textarea')?.value.trim()||'';if(!textAnswer)return;answers.push({q:q.q,response:textAnswer,graded:false})}else{if(chosen.length!==(q.correct?.length||1))return;const correct=q.correct?isCorrect(q,chosen):null;answers.push({q:q.q,response:chosen.map(i=>q.options[i]).join(' + '),graded:q.correct?correct:null})}index++;chosen=[];revealed=false;render()}
+function render(){if(index<0){app.innerHTML=`<div class="hero-emoji">🎮</div><div class="eyebrow">A GAME MADE JUST FOR YOU</div><h1 class="title">THE DIVYA<br>CHALLENGE<span style="color:var(--pink)">.</span></h1><p class="subtitle">15 questions. Five levels. Some OG memories. Some questionable choices. Let's find out how well you actually know Ali.</p><button class="primary" onclick="start()">START THE CHALLENGE →</button><p class="tiny center">No logins. No awkward speeches. Just you versus 15 questions.</p>`;return}
+if(index>=questions.length){finish();return}
+const q=questions[index],multi=q.correct?.length===2,valid=q.kind==='text'?textAnswer.trim().length>0:chosen.length===(multi?2:1);
+app.innerHTML=`<div class="topline"><span>${esc(q.level)}</span><span>${index+1} / ${questions.length}</span></div><div class="bar"><div style="width:${(index/questions.length)*100}%"></div></div><h2 class="question">${esc(q.q)}</h2>${multi?'<p class="tiny">Select exactly TWO answers.</p>':''}${q.kind==='text'?`<textarea maxlength="2500" placeholder="Your answer. No wrong answers here..." oninput="textAnswer=this.value;document.getElementById('next').disabled=!this.value.trim()">${esc(textAnswer)}</textarea><p class="tiny">Your answer is saved in this game. At the end, you can choose whether to send your answers to Ali.</p>`:`<div class="options">${q.options.map((opt,i)=>`<button type="button" class="choice ${chosen.includes(i)?'selected':''}" onclick="choose(${i})"><span class="letter">${multi?(chosen.includes(i)?'✓':'□'):String.fromCharCode(65+i)}</span><span>${esc(opt)}</span></button>`).join('')}</div>`}${revealed&&q.correct?`<div class="feedback ${isCorrect(q,chosen)?'good':'bad'}">${esc(isCorrect(q,chosen)?q.good:q.bad)}</div>`:''}<button id="next" class="primary" ${valid?'':'disabled'} onclick="${q.forceRetry&&revealed&&!isCorrect(q,chosen)?'retryFinal()':q.correct?'confirmAnswer()':'next()'}">${q.forceRetry&&revealed&&!isCorrect(q,chosen)?'TRY AGAIN ↻':q.final&&revealed?'FINISH →':q.kind==='text'?'SAVE ANSWER →':q.correct&&!revealed?'CHECK ANSWER →':'CONTINUE →'}</button>${q.kind==='opinion'?'<p class="tiny center">No wrong answers on this one.</p>':''}`;
+}
+function confirmAnswer(){const q=questions[index];if(!revealed){const correct=isCorrect(q,chosen);playSound(correct?'correct':'wrong');revealed=true;render();if(correct)redConfetti()}else if(q.forceRetry&&!isCorrect(q,chosen)){retryFinal()}else next()}
+function resultText(){const correct=answers.filter(a=>a.graded===true).length;const total=questions.filter(q=>q.correct).length;return `THE DIVYA CHALLENGE — RESULTS\nScore: ${correct}/${total} graded questions\n\n`+answers.map((a,i)=>`${i+1}. ${a.q}\nAnswer: ${a.response}${a.graded===null||a.graded===false&&questions[i].kind==='text'?'':a.graded?' ✅':' ❌'}`).join('\n\n')+'\n\nMade for Divya ❤️'}
+function finish(){const correct=answers.filter(a=>a.graded===true).length,total=questions.filter(q=>q.correct).length;app.innerHTML=`<div class="center"><div class="hero-emoji">🏆</div><div class="eyebrow">CHALLENGE COMPLETE</div><h1 class="title">YOU MADE IT.</h1><p class="subtitle">Okay, Divya. You survived all 15 questions. Honestly? Respect.</p><div class="score">${correct} / ${total}</div><p class="tiny">Score on the trivia questions · The fun and written questions don't have wrong answers.</p><p class="subtitle" style="color:var(--pink)">Thanks for playing. ❤️</p></div><details style="margin-top:18px"><summary style="cursor:pointer;color:var(--accent);font-weight:700">View all your answers</summary><div class="results" id="results">${esc(resultText())}</div></details><div style="margin-top:20px;padding:15px;border:1px solid var(--line);border-radius:14px;background:#242039"><p class="tiny" style="margin:0 0 12px">Optional: Tap below to send your score, all 15 answers, and your written response to Ali through Formspree. Nothing is sent unless you press the button.</p><button id="submitAnswers" class="primary" style="margin-top:0" onclick="submitResults()">SEND MY ANSWERS TO ALI ❤️</button><p class="tiny center" id="submitstatus" role="status" aria-live="polite"></p></div><button class="secondary" style="width:100%;margin-top:12px" onclick="copyResults()">COPY MY ANSWERS INSTEAD</button><p class="tiny center" id="copymsg">You can also copy your answers and message them to Ali yourself.</p><button class="secondary" style="width:100%;margin-top:12px" onclick="start()">PLAY AGAIN</button>`}
+async function submitResults(){
+ if(submissionInProgress||submissionDone)return;
+ const button=document.getElementById('submitAnswers'),status=document.getElementById('submitstatus');
+ submissionInProgress=true;button.disabled=true;button.textContent='SENDING...';status.textContent='Submitting your answers…';
+ const correct=answers.filter(a=>a.graded===true).length,total=questions.filter(q=>q.correct).length;
+ const payload={_subject:'Divya Challenge — Completed Answers',challenge:'The Divya Challenge',score:`${correct}/${total}`,all_answers:resultText(),favorite_things_about_ali:answers.find(a=>a.q==='What are your favorite things about Ali?')?.response||'',submitted_at:new Date().toISOString()};
+ try{
+  const response=await fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
+  if(!response.ok)throw new Error('Submission was not accepted');
+  submissionDone=true;button.textContent='ANSWERS SENT ✓';status.textContent='Sent successfully! Ali can see your answers in Formspree. ❤️';
+ }catch(error){
+  button.disabled=false;button.textContent='TRY SENDING AGAIN';status.textContent='Could not send right now. Try again, or use “Copy My Answers Instead” below.';
+ }finally{submissionInProgress=false}
+}
+async function copyResults(){const t=resultText();try{await navigator.clipboard.writeText(t);document.getElementById('copymsg').textContent='Copied! Paste the answers into a message to Ali.'}catch(e){const el=document.createElement('textarea');el.value=t;document.body.appendChild(el);el.select();try{document.execCommand('copy');document.getElementById('copymsg').textContent='Copied! Paste the answers into a message to Ali.'}catch(e2){document.getElementById('copymsg').textContent='Copy failed. Open “View all your answers” and copy them manually.'}el.remove()}}
+render();
+</script></body></html>
